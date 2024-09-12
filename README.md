@@ -1,7 +1,7 @@
 # M3: A Markov Distinction
-## CSCI 3725: Computational Creativity
-## Khalil Kilani
-## September 17, 2024
+**CSCI 3725: Computational Creativity**
+**Khalil Kilani**
+**September 17, 2024**
 
 # TITLE
 
