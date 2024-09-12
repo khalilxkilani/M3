@@ -1,7 +1,6 @@
 # M3: A Markov Distinction
 ## CSCI 3725: Computational Creativity
 ## Khalil Kilani
-## Professor Sarah Harmon
 ## September 17, 2024
 
 # TITLE
