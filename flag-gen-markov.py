@@ -58,15 +58,27 @@ def create_flag(flag_properties):
 
 def add_color_pattern(draw, flag_pattern):
     if flag_pattern == "Horizontal Stripes":
-        draw.rectangle((0, 0, 139, 252), fill="red")
-        draw.rectangle((139, 0, 278, 252), fill="green")
-        draw.rectangle((278, 0, 417, 252), fill="blue")
+        coords = (0, 0, 417, 84) # coordinates for first rectangle
     elif flag_pattern == "Vertical Stripes":
-        draw.rectangle((0, 0, 417, 84), fill="powderblue")
-        draw.rectangle((0, 84, 417, 168), fill="green")
-        draw.rectangle((0, 168, 417, 252), fill="blue")
+        coords = (0, 0, 139, 252) # coordinates for first rectangle
     else:
         print(f"Error in add_pattern: case for {flag_pattern}")
+    
+    for i in range(3):
+        if flag_pattern == "Horizontal Stripes":
+            print(f"CURR COORDS: {coords}") # DEBUGGER
+            draw.rectangle(coords, fill="red")
+            new_coords = (0, coords[1]+84, 417, coords[3]+84) # update by 84 px to move downward a third
+            coords = new_coords
+            print(f"NEW COORDS: {new_coords}") # DEBUGGER
+        elif flag_pattern == "Vertical Stripes":
+            print(f"CURR COORDS: {coords}") # DEBUGGER
+            draw.rectangle(coords, fill="red")
+            new_coords = (coords[0]+139, 0, coords[2]+139, 252) # update by 139 px to move rightward a third
+            coords = new_coords
+            print(f"NEW COORDS: {new_coords}") # DEBUGGER
+        else:
+            print(f"Error in add_pattern: case for {flag_pattern}")
 
 def main():
     flag_patterns = {
