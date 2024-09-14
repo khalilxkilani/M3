@@ -11,22 +11,16 @@ import random
 from PIL import Image, ImageDraw
 
 SEQUENCE_LEN = 3
+
 flag_colors = {
     "Pan-Arab" : ["black", "red", "darkgreen"],
-    "Pan-African" : ["darkgreeen", "gold", "red"],
+    "Pan-African" : ["darkgreen", "gold", "red"],
     "Pan-Slavic" : ["white", "blue", "red"],
     "Pan-Iranian" : ["white", "red", "yellowgreen"],
     "Miranda" : ["gold", "mediumblue", "red"],
     "Belgrano" : ["mediumblue", "white", "powderblue"],
     "Red-White Family" : ["red", "white", "maroon"]
 }
-# pan_arab_colors = ["black", "red", "darkgreen"]
-# pan_african_colors = ["darkgreeen", "gold", "red"]
-# pan_slavic_colors = ["white", "blue", "red"]
-# pan_iranian_colors = ["white", "red", "yellowgreen"]
-# miranda_colors = ["gold", "mediumblue", "red"]
-# belgrano_colors = ["mediumblue", "white", "powderblue"]
-# red_white_family_colors = ["red", "white", "maroon"]
 
 class MarkovChain:
     def __init__(self, transition_matrix):
@@ -58,14 +52,15 @@ class Flag:
 def create_flag(flag_properties):
     pattern, color_theme, symbol = flag_properties
     print(f"Pattern: {pattern}, Color Theme: {color_theme}, Symbol: {symbol}") # DEBUGGER
-    image = Image.new("RGB", size=(400, 250))
-    draw = ImageDraw.Draw(image)
-    # draw.polygon(((100, 100), (200, 50), (125, 25)), fill="green")
     
-    return
+    image = Image.new("RGB", size=(417, 252))
+    draw = ImageDraw.Draw(image)
+    
+    add_color_pattern(draw, pattern, color_theme)
+    image.show()
 
 def add_color_pattern(draw, flag_pattern, flag_color_theme):
-    colors = flag_colors[flag_color_theme]
+    colors = flag_colors[flag_color_theme].copy() # without copy(), this would modify what is in the dict
     
     if flag_pattern == "Horizontal Stripes":
         coords = (0, 0, 417, 84) # coordinates for first rectangle
@@ -76,30 +71,33 @@ def add_color_pattern(draw, flag_pattern, flag_color_theme):
     
     for i in range(3):
         if flag_pattern == "Horizontal Stripes":
-            print(f"CURR COORDS: {coords}") # DEBUGGER
-            fill = random.choice(colors)
+            fill = random.choice(colors) # grab a random color from the current theme
             colors.remove(fill)
             draw.rectangle(coords, fill=fill)
-            new_coords = (0, coords[1]+84, 417, coords[3]+84) # update by 84 px to move downward a third
+            
+            new_coords = (0, coords[1]+84, 417, coords[3]+84) # update coords by 84 px to move downward a third
             coords = new_coords
-            print(f"NEW COORDS: {new_coords}") # DEBUGGER
         elif flag_pattern == "Vertical Stripes":
-            print(f"CURR COORDS: {coords}") # DEBUGGER
             fill = random.choice(colors)
             colors.remove(fill)
             draw.rectangle(coords, fill=fill)
-            new_coords = (coords[0]+139, 0, coords[2]+139, 252) # update by 139 px to move rightward a third
+            
+            new_coords = (coords[0]+139, 0, coords[2]+139, 252) # update coords by 139 px to move rightward a third
             coords = new_coords
-            print(f"NEW COORDS: {new_coords}") # DEBUGGER
         else:
             print(f"Error in add_pattern: case for {flag_pattern}")
 
 def main():
     flag_patterns = {
-        "Horizontal Stripes" : {"Horizontal Stripes" : 0.4, "Vertical Stripes" : 0.2, "Diagonal Stripes" : 0.4},
-        "Vertical Stripes" : {"Horizontal Stripes" : 0.1, "Vertical Stripes" : 0.4, "Diagonal Stripes" : 0.5},
-        "Diagonal Stripes" : {"Horizontal Stripes" : 0.5, "Vertical Stripes" : 0.2, "Diagonal Stripes" : 0.3},
+        "Horizontal Stripes" : {"Horizontal Stripes" : 0.4, "Vertical Stripes" : 0.6},
+        "Vertical Stripes" : {"Horizontal Stripes" : 0.6, "Vertical Stripes" : 0.4}
     }
+    
+    # flag_patterns = {
+    #     "Horizontal Stripes" : {"Horizontal Stripes" : 0.4, "Vertical Stripes" : 0.2, "Diagonal Stripes" : 0.4},
+    #     "Vertical Stripes" : {"Horizontal Stripes" : 0.1, "Vertical Stripes" : 0.4, "Diagonal Stripes" : 0.5},
+    #     "Diagonal Stripes" : {"Horizontal Stripes" : 0.5, "Vertical Stripes" : 0.2, "Diagonal Stripes" : 0.3},
+    # }
     
     flag_color_themes = {
         "Pan-Arab" : {"Pan-Arab" : 0.1, "Pan-African" : 0.2, "Pan-Slavic" : 0.3, "Pan-Iranian" : 0.1, "Miranda" : 0.1, "Belgrano" : 0.1, "Red-White Family" : 0.1},
@@ -132,20 +130,12 @@ def main():
     
     print(flag_tuples) # DEBUGGER
     
-    # for flag in flag_tuples:
-    #     create_flag(flag)
+    for flag in flag_tuples:
+        create_flag(flag)
     
-    image = Image.new("RGB", size=(417, 252))
-    draw = ImageDraw.Draw(image)
-    # draw.rectangle((0, 0, 139, 252), fill="red")
-    # draw.rectangle((139, 0, 278, 252), fill="green")
-    # draw.rectangle((278, 0, 417, 252), fill="blue")
-    
-    # draw.rectangle((0, 0, 417, 84), fill="red")
-    # draw.rectangle((0, 84, 417, 168), fill="green")
-    # draw.rectangle((0, 168, 417, 252), fill="blue")
-    add_color_pattern(draw, "Vertical Stripes", "Pan-Arab")
-    image.show()
+    # create_flag(("Horizontal Stripes", "Miranda", "Bear"))
+    # create_flag(("Horizontal Stripes", "Pan-Slavic", "Flower"))
+    # create_flag(("Horizontal Stripes", "Pan-Slavic", "Flower"))
 
 if __name__ == "__main__":
     main()
