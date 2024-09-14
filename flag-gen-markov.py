@@ -49,7 +49,7 @@ class Flag:
     def __init__(self, pattern, color_theme, pattern_repeat, symbol):
         self.pattern = pattern
         self.color_theme = color_theme
-        self.pattern_repeat = int(pattern_repeat)
+        self.pattern_repeat = int(pattern_repeat) # cast pattern repeat value from str to int
         self.symbol = symbol
 
     def draw_flag(self):
@@ -58,53 +58,45 @@ class Flag:
         image = Image.new("RGB", size=(WIDTH_PX, HEIGHT_PX))
         draw = ImageDraw.Draw(image)
         
-        add_color_pattern(draw, self.pattern, self.color_theme, self.pattern_repeat)
+        self.add_color_pattern(draw)
         image.show()
 
-def add_color_pattern(draw, flag_pattern, flag_color_theme, pattern_repeat):
-    colors = flag_colors[flag_color_theme].copy() # without copy(), this would modify what is in the dict
-    prev_color = None
-    
-    if flag_pattern == "Horizontal Stripes":
-        coords = (0, 0, WIDTH_PX, HEIGHT_PX/pattern_repeat) # coordinates for first rectangle
-    elif flag_pattern == "Vertical Stripes":
-        coords = (0, 0, WIDTH_PX/pattern_repeat, HEIGHT_PX) # coordinates for first rectangle
-    else:
-        print(f"Error in add_pattern: case for {flag_pattern}")
-    
-    for i in range(pattern_repeat):
-        if flag_pattern == "Horizontal Stripes":
-            # fill = random.choice(colors) # grab a random color from the current theme
-            fill = random.choice([color for color in colors if color != prev_color])
-            print(f"FILL: {fill}")
-            draw.rectangle(coords, fill=fill)
-            
-            new_coords = (0, coords[1]+(HEIGHT_PX/pattern_repeat), 417, coords[3]+(HEIGHT_PX/pattern_repeat)) # update coords by 84 px to move downward a third
-            coords = new_coords
-            prev_color = fill
-        elif flag_pattern == "Vertical Stripes":
-            # fill = random.choice(colors)
-            fill = random.choice([color for color in colors if color != prev_color])
-            print(f"FILL: {fill}")
-            draw.rectangle(coords, fill=fill)
-            
-            new_coords = (coords[0]+(WIDTH_PX/pattern_repeat), 0, coords[2]+(WIDTH_PX/pattern_repeat), 252) # update coords by 139 px to move rightward a third
-            coords = new_coords
-            prev_color = fill
+    def add_color_pattern(self, draw):
+        colors = flag_colors[self.color_theme].copy() # without copy(), this would modify what is in the dict
+        prev_color = None
+        
+        if self.pattern == "Horizontal Stripes":
+            coords = (0, 0, WIDTH_PX, HEIGHT_PX/self.pattern_repeat) # coordinates for first rectangle
+        elif self.pattern == "Vertical Stripes":
+            coords = (0, 0, WIDTH_PX/self.pattern_repeat, HEIGHT_PX) # coordinates for first rectangle
         else:
-            print(f"Error in add_pattern: case for {flag_pattern}")
+            print(f"Error in add_pattern: case for {self.pattern}")
+        
+        for i in range(self.pattern_repeat):
+            if self.pattern == "Horizontal Stripes":
+                fill = random.choice([color for color in colors if color != prev_color]) # grab a random color from the current theme, do not repeat colors consecutively
+                print(f"FILL: {fill}")
+                draw.rectangle(coords, fill=fill)
+                
+                new_coords = (0, coords[1]+(HEIGHT_PX/self.pattern_repeat), 417, coords[3]+(HEIGHT_PX/self.pattern_repeat)) # update coords by 84 px to move downward a third
+                coords = new_coords
+                prev_color = fill
+            elif self.pattern == "Vertical Stripes":
+                fill = random.choice([color for color in colors if color != prev_color]) # grab a random color from the current theme, do not repeat colors consecutively
+                print(f"FILL: {fill}")
+                draw.rectangle(coords, fill=fill)
+                
+                new_coords = (coords[0]+(WIDTH_PX/self.pattern_repeat), 0, coords[2]+(WIDTH_PX/self.pattern_repeat), 252) # update coords by 139 px to move rightward a third
+                coords = new_coords
+                prev_color = fill
+            else:
+                print(f"Error in add_pattern: case for {self.pattern}")
 
 def main():
     flag_patterns = {
         "Horizontal Stripes" : {"Horizontal Stripes" : 0.4, "Vertical Stripes" : 0.6},
         "Vertical Stripes" : {"Horizontal Stripes" : 0.6, "Vertical Stripes" : 0.4}
     }
-    
-    # flag_patterns = {
-    #     "Horizontal Stripes" : {"Horizontal Stripes" : 0.4, "Vertical Stripes" : 0.2, "Diagonal Stripes" : 0.4},
-    #     "Vertical Stripes" : {"Horizontal Stripes" : 0.1, "Vertical Stripes" : 0.4, "Diagonal Stripes" : 0.5},
-    #     "Diagonal Stripes" : {"Horizontal Stripes" : 0.5, "Vertical Stripes" : 0.2, "Diagonal Stripes" : 0.3},
-    # }
     
     flag_color_themes = {
         "Pan-Arab" : {"Pan-Arab" : 0.1, "Pan-African" : 0.2, "Pan-Slavic" : 0.3, "Pan-Iranian" : 0.1, "Miranda" : 0.1, "Belgrano" : 0.1, "Red-White Family" : 0.1},
@@ -148,10 +140,6 @@ def main():
         pattern, color_theme, num_repetitions, symbol = flag # unpack the tuple of flag properties
         new_flag = Flag(pattern, color_theme, num_repetitions, symbol) # create a flag object
         new_flag.draw_flag()
-    
-    # create_flag(("Horizontal Stripes", "Miranda", "Bear"))
-    # create_flag(("Horizontal Stripes", "Pan-Slavic", "Flower"))
-    # create_flag(("Horizontal Stripes", "Pan-Slavic", "Flower"))
 
 if __name__ == "__main__":
     main()
