@@ -8,6 +8,7 @@ Date: September 17, 2024
 import numpy as np
 import matplotlib.pyplot as plt
 import random
+import os
 from PIL import Image, ImageDraw
 
 SEQUENCE_LEN = 3
@@ -121,6 +122,17 @@ def main():
         "Bear" : {"Star" : 0.5, "Shield" : 0.2, "Bear" : 0.1, "Flower" : 0.2},
         "Flower" : {"Star" : 0.2, "Shield" : 0.3, "Bear" : 0.1, "Flower" : 0.4}
     }
+    
+    # reading in the images
+    directory = os.path.dirname(os.path.realpath(__file__)) # get path to current directory to ensure images can be found when not working locally
+    bear_image = Image.open(directory + "/graphics/bear.png") # prepend path to current directory to path of image
+    polar_bear_image = Image.open(directory + "/graphics/polar-bear.png")
+    white_star = Image.open(directory + "/graphics/white-star.png")
+    black_star = Image.open(directory + "/graphics/black-star.png")
+    red_flowers = Image.open(directory + "/graphics/red-flowers.png")
+    orange_flower = Image.open(directory + "/graphics/orange-flower.png")
+    bw_flower = Image.open(directory + "/graphics/bw-flower.png")
+    shield = Image.open(directory + "/graphics/shield.png")
     
     properties = [flag_patterns, flag_color_themes, flag_num_repetitions, flag_symbols]
     generated_sequences = []
