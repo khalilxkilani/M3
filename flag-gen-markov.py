@@ -44,20 +44,19 @@ class MarkovChain:
         return generated_sequence
 
 class Flag:
-    def __init__(self, color_theme, pattern, symbol):
-        self.color_theme = color_theme
+    def __init__(self, pattern, color_theme, symbol):
         self.pattern = pattern
+        self.color_theme = color_theme
         self.symbol = symbol
 
-def create_flag(flag_properties):
-    pattern, color_theme, symbol = flag_properties
-    print(f"Pattern: {pattern}, Color Theme: {color_theme}, Symbol: {symbol}") # DEBUGGER
-    
-    image = Image.new("RGB", size=(417, 252))
-    draw = ImageDraw.Draw(image)
-    
-    add_color_pattern(draw, pattern, color_theme)
-    image.show()
+    def draw_flag(self):
+        print(f"Pattern: {self.pattern}, Color Theme: {self.color_theme}, Symbol: {self.symbol}") # DEBUGGER
+        
+        image = Image.new("RGB", size=(417, 252))
+        draw = ImageDraw.Draw(image)
+        
+        add_color_pattern(draw, self.pattern, self.color_theme)
+        image.show()
 
 def add_color_pattern(draw, flag_pattern, flag_color_theme):
     colors = flag_colors[flag_color_theme].copy() # without copy(), this would modify what is in the dict
@@ -131,7 +130,9 @@ def main():
     print(flag_tuples) # DEBUGGER
     
     for flag in flag_tuples:
-        create_flag(flag)
+        pattern, color_theme, symbol = flag # unpack the tuple of flag properties
+        new_flag = Flag(pattern, color_theme, symbol) # create a flag object
+        new_flag.draw_flag()
     
     # create_flag(("Horizontal Stripes", "Miranda", "Bear"))
     # create_flag(("Horizontal Stripes", "Pan-Slavic", "Flower"))
