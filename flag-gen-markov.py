@@ -8,9 +8,17 @@ Date: September 17, 2024
 import numpy as np
 import matplotlib.pyplot as plt
 import random
-from PIL import Image
+from PIL import Image, ImageDraw
 
 SEQUENCE_LEN = 3
+
+pan_arab_colors = ["", "", ""]
+pan_african_colors = ["darkgreeen", "gold", "red"]
+pan_slavic_colors = ["white", "blue", "red"]
+pan_iranian_colors = ["white", "red", "yellowgreen"]
+miranda_colors = ["gold", "mediumblue", "red"]
+belgrano_colors = ["mediumblue", "white", "powderblue"]
+red_white_family_colors = ["red", "white", "maroon"]
 
 class MarkovChain:
     def __init__(self, transition_matrix):
@@ -39,8 +47,26 @@ class Flag:
         self.pattern = pattern
         self.symbol = symbol
 
-def create_flag():
+def create_flag(flag_properties):
+    pattern, color_theme, symbol = flag_properties
+    print(f"Pattern: {pattern}, Color Theme: {color_theme}, Symbol: {symbol}") # DEBUGGER
+    image = Image.new("RGB", size=(400, 250))
+    draw = ImageDraw.Draw(image)
+    # draw.polygon(((100, 100), (200, 50), (125, 25)), fill="green")
+    
     return
+
+def add_color_pattern(draw, flag_pattern):
+    if flag_pattern == "Horizontal Stripes":
+        draw.rectangle((0, 0, 139, 252), fill="red")
+        draw.rectangle((139, 0, 278, 252), fill="green")
+        draw.rectangle((278, 0, 417, 252), fill="blue")
+    elif flag_pattern == "Vertical Stripes":
+        draw.rectangle((0, 0, 417, 84), fill="powderblue")
+        draw.rectangle((0, 84, 417, 168), fill="green")
+        draw.rectangle((0, 168, 417, 252), fill="blue")
+    else:
+        print(f"Error in add_pattern: case for {flag_pattern}")
 
 def main():
     flag_patterns = {
@@ -79,6 +105,21 @@ def main():
     flag_tuples = tuple(zip(*generated_sequences))
     
     print(flag_tuples) # DEBUGGER
+    
+    # for flag in flag_tuples:
+    #     create_flag(flag)
+    
+    image = Image.new("RGB", size=(400, 250))
+    draw = ImageDraw.Draw(image)
+    # draw.rectangle((0, 0, 139, 252), fill="red")
+    # draw.rectangle((139, 0, 278, 252), fill="green")
+    # draw.rectangle((278, 0, 417, 252), fill="blue")
+    
+    # draw.rectangle((0, 0, 417, 84), fill="red")
+    # draw.rectangle((0, 84, 417, 168), fill="green")
+    # draw.rectangle((0, 168, 417, 252), fill="blue")
+    add_color_pattern(draw, "Vertical Stripes")
+    image.show()
 
 if __name__ == "__main__":
     main()
