@@ -43,6 +43,12 @@ def create_flag():
     return
 
 def main():
+    flag_patterns = {
+        "Horizontal Stripes" : {"Horizontal Stripes" : 0.4, "Vertical Stripes" : 0.2, "Diagonal Stripes" : 0.4},
+        "Vertical Stripes" : {"Horizontal Stripes" : 0.1, "Vertical Stripes" : 0.4, "Diagonal Stripes" : 0.5},
+        "Diagonal Stripes" : {"Horizontal Stripes" : 0.5, "Vertical Stripes" : 0.2, "Diagonal Stripes" : 0.3},
+    }
+    
     flag_color_themes = {
         "Pan-Arab" : {"Pan-Arab" : 0.1, "Pan-African" : 0.2, "Pan-Slavic" : 0.3, "Pan-Iranian" : 0.1, "Miranda" : 0.1, "Belgrano" : 0.1, "Red-White Family" : 0.1},
         "Pan-African" : {"Pan-Arab" : 0.1, "Pan-African" : 0.1, "Pan-Slavic" : 0.2, "Pan-Iranian" : 0.3, "Miranda" : 0.1, "Belgrano" : 0.1, "Red-White Family" : 0.1},
@@ -53,12 +59,6 @@ def main():
         "Red-White Family" : {"Pan-Arab" : 0.1, "Pan-African" : 0.2, "Pan-Slavic" : 0.2, "Pan-Iranian" : 0.1, "Miranda" : 0.1, "Belgrano" : 0.1, "Red-White Family" : 0.1},
     }
     
-    flag_patterns = {
-        "Horizontal Stripes" : {"Horizontal Stripes" : 0.4, "Vertical Stripes" : 0.2, "Diagonal Stripes" : 0.4},
-        "Vertical Stripes" : {"Horizontal Stripes" : 0.1, "Vertical Stripes" : 0.4, "Diagonal Stripes" : 0.5},
-        "Diagonal Stripes" : {"Horizontal Stripes" : 0.5, "Vertical Stripes" : 0.2, "Diagonal Stripes" : 0.3},
-    }
-    
     flag_symbols = {
         "Star" : {"Star" : 0.4, "Shield" : 0.1, "Bear" : 0.3, "Flower" : 0.2},
         "Shield" : {"Star" : 0.2, "Shield" : 0.1, "Bear" : 0.5, "Flower" : 0.2},
@@ -66,12 +66,12 @@ def main():
         "Flower" : {"Star" : 0.2, "Shield" : 0.3, "Bear" : 0.1, "Flower" : 0.4}
     }
     
-    properties = [flag_color_themes, flag_patterns, flag_symbols]
+    properties = [flag_patterns, flag_color_themes, flag_symbols]
     generated_sequences = []
     
     for property in properties:
-        property_maker = MarkovChain(property)
-        new_sequence = property_maker.generate_sequence(SEQUENCE_LEN)
+        markov_chain = MarkovChain(property)
+        new_sequence = markov_chain.generate_sequence(SEQUENCE_LEN)
         # print(new_sequence) # DEBUGGER
         generated_sequences.append(new_sequence)
     
