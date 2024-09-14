@@ -44,26 +44,26 @@ def create_flag():
 
 def main():
     flag_color_themes = {
-        "Pan-Arab" : {"Pan-Arab" : 0, "Pan-African" : 0, "Pan-Slavic" : 0, "Pan-Iranian" : 0, "Miranda" : 0, "Belgrano" : 0, "Red-White Family" : 0},
-        "Pan-African" : {"Pan-Arab" : 0, "Pan-African" : 0, "Pan-Slavic" : 0, "Pan-Iranian" : 0, "Miranda" : 0, "Belgrano" : 0, "Red-White Family" : 0},
-        "Pan-Slavic" : {"Pan-Arab" : 0, "Pan-African" : 0, "Pan-Slavic" : 0, "Pan-Iranian" : 0, "Miranda" : 0, "Belgrano" : 0, "Red-White Family" : 0},
-        "Pan-Iranian" : {"Pan-Arab" : 0, "Pan-African" : 0, "Pan-Slavic" : 0, "Pan-Iranian" : 0, "Miranda" : 0, "Belgrano" : 0, "Red-White Family" : 0},
-        "Miranda" : {"Pan-Arab" : 0, "Pan-African" : 0, "Pan-Slavic" : 0, "Pan-Iranian" : 0, "Miranda" : 0, "Belgrano" : 0, "Red-White Family" : 0},
-        "Belgrano" : {"Pan-Arab" : 0, "Pan-African" : 0, "Pan-Slavic" : 0, "Pan-Iranian" : 0, "Miranda" : 0, "Belgrano" : 0, "Red-White Family" : 0},
-        "Red-White Family" : {"Pan-Arab" : 0, "Pan-African" : 0, "Pan-Slavic" : 0, "Pan-Iranian" : 0, "Miranda" : 0, "Belgrano" : 0, "Red-White Family" : 0},
+        "Pan-Arab" : {"Pan-Arab" : 0.1, "Pan-African" : 0.2, "Pan-Slavic" : 0.3, "Pan-Iranian" : 0.1, "Miranda" : 0.1, "Belgrano" : 0.1, "Red-White Family" : 0.1},
+        "Pan-African" : {"Pan-Arab" : 0.1, "Pan-African" : 0.1, "Pan-Slavic" : 0.2, "Pan-Iranian" : 0.3, "Miranda" : 0.1, "Belgrano" : 0.1, "Red-White Family" : 0.1},
+        "Pan-Slavic" : {"Pan-Arab" : 0.1, "Pan-African" : 0.1, "Pan-Slavic" : 0.1, "Pan-Iranian" : 0.2, "Miranda" : 0.3, "Belgrano" : 0.1, "Red-White Family" : 0.1},
+        "Pan-Iranian" : {"Pan-Arab" : 0.1, "Pan-African" : 0.1, "Pan-Slavic" : 0.1, "Pan-Iranian" : 0.1, "Miranda" : 0.2, "Belgrano" : 0.3, "Red-White Family" : 0.1},
+        "Miranda" : {"Pan-Arab" : 0.1, "Pan-African" : 0.1, "Pan-Slavic" : 0.1, "Pan-Iranian" : 0.1, "Miranda" : 0.1, "Belgrano" : 0.2, "Red-White Family" : 0.3},
+        "Belgrano" : {"Pan-Arab" : 0.4, "Pan-African" : 0.1, "Pan-Slavic" : 0.1, "Pan-Iranian" : 0.1, "Miranda" : 0.1, "Belgrano" : 0.1, "Red-White Family" : 0.1},
+        "Red-White Family" : {"Pan-Arab" : 0.1, "Pan-African" : 0.2, "Pan-Slavic" : 0.2, "Pan-Iranian" : 0.1, "Miranda" : 0.1, "Belgrano" : 0.1, "Red-White Family" : 0.1},
     }
     
     flag_patterns = {
-        "Horizontal Stripes" : {"Horizontal Stripes" : 0, "Vertical Stripes" : 0, "Diagonal Stripes" : 0},
-        "Vertical Stripes" : {"Horizontal Stripes" : 0, "Vertical Stripes" : 0, "Diagonal Stripes" : 0},
-        "Diagonal Stripes" : {"Horizontal Stripes" : 0, "Vertical Stripes" : 0, "Diagonal Stripes" : 0},
+        "Horizontal Stripes" : {"Horizontal Stripes" : 0.4, "Vertical Stripes" : 0.2, "Diagonal Stripes" : 0.4},
+        "Vertical Stripes" : {"Horizontal Stripes" : 0.1, "Vertical Stripes" : 0.4, "Diagonal Stripes" : 0.5},
+        "Diagonal Stripes" : {"Horizontal Stripes" : 0.5, "Vertical Stripes" : 0.2, "Diagonal Stripes" : 0.3},
     }
     
     flag_symbols = {
-        "Star" : {"Star" : 0, "Shield" : 0, "Bear" : 0, "Flower" : 0},
-        "Shield" : {"Star" : 0, "Shield" : 0, "Bear" : 0, "Flower" : 0},
-        "Bear" : {"Star" : 0, "Shield" : 0, "Bear" : 0, "Flower" : 0},
-        "Flower" : {"Star" : 0, "Shield" : 0, "Bear" : 0, "Flower" : 0}
+        "Star" : {"Star" : 0.4, "Shield" : 0.1, "Bear" : 0.3, "Flower" : 0.2},
+        "Shield" : {"Star" : 0.2, "Shield" : 0.1, "Bear" : 0.5, "Flower" : 0.2},
+        "Bear" : {"Star" : 0.5, "Shield" : 0.2, "Bear" : 0.1, "Flower" : 0.2},
+        "Flower" : {"Star" : 0.2, "Shield" : 0.3, "Bear" : 0.1, "Flower" : 0.4}
     }
     
     properties = [flag_color_themes, flag_patterns, flag_symbols]
@@ -72,10 +72,13 @@ def main():
     for property in properties:
         property_maker = MarkovChain(property)
         new_sequence = property_maker.generate_sequence(SEQUENCE_LEN)
+        # print(new_sequence) # DEBUGGER
         generated_sequences.append(new_sequence)
     
-    flag_tuples = zip(*generated_sequences)
-    print(flag_tuples)
+    # print(generated_sequences) # DEBUGGER
+    flag_tuples = tuple(zip(*generated_sequences))
+    
+    print(flag_tuples) # DEBUGGER
 
 if __name__ == "__main__":
     main()
