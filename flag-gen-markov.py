@@ -174,6 +174,9 @@ def main():
         pattern, color_theme, num_repetitions, symbol = flag # unpack the tuple of flag properties
         new_flag = Flag(pattern, color_theme, num_repetitions, symbol) # create a flag object
         new_flag.draw_flag()
+    
+    ans = input("Which region of the world do you think each flag could belong to?\n")
+    # notes: add graph to display all flags? grows to know len of sequence? labeled by flag 1, etc.?
 
 if __name__ == "__main__":
     main()
