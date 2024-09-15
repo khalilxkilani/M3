@@ -14,6 +14,7 @@ from PIL import Image, ImageDraw, ImageOps
 SEQUENCE_LEN = 9
 WIDTH_PX = 417
 HEIGHT_PX = 252
+FIG_DIMENSION_MULTIPLIER = 2.5
 NUM_COLS = 3
 
 flag_colors = {
@@ -184,20 +185,20 @@ def main():
     if (SEQUENCE_LEN % 3) != 0: # if there is remainder of flags, add an extra row
         num_rows += 1
     
-    # create a figure (size in inches)
-    graph = plt.figure(figsize=(6, 2*num_rows))
+    # create a figure and specify size in inches
+    grid = plt.figure(figsize=(FIG_DIMENSION_MULTIPLIER * NUM_COLS, FIG_DIMENSION_MULTIPLIER * num_rows)) # 2.5 x 2.5 inch square allocated to each flag
     plt.rcParams["font.family"] = "serif" # change the font of the graphs 
     
     # add a subplot for each flag
     for i in range(0, SEQUENCE_LEN):
-        graph.add_subplot(num_rows, NUM_COLS, i + 1) # add a subplot next to the prior one
+        grid.add_subplot(num_rows, NUM_COLS, i + 1) # add a subplot next to the prior one
         plt.imshow(flag_images[i])
         plt.title(f"Flag #{i+1}") # assign a number for each flag
         plt.axis("off")
     
-    graph.suptitle("Flags", fontsize=24, weight="bold", color="black") # add title
-    graph.tight_layout() # fit subplots into figure bounds
-    graph.show()
+    grid.suptitle("Flags from an Imaginary World", fontsize=24, weight="bold", color="black") # add title
+    grid.tight_layout() # fit subplots into grid bounds
+    grid.show()
 
 if __name__ == "__main__":
     main()
