@@ -9,11 +9,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random
 import os
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageOps
 
-SEQUENCE_LEN = 3
+SEQUENCE_LEN = 9
 WIDTH_PX = 417
 HEIGHT_PX = 252
+NUM_COLS = 3
 
 flag_colors = {
     "Pan-Arab" : ["black", "red", "darkgreen"],
@@ -63,7 +64,9 @@ class Flag:
         
         self.add_color_pattern(draw)
         self.add_symbol(image)
-        image.show()
+        image = ImageOps.expand(image, border=5, fill="black") # add a black border to the flag
+        # image.show() # DEBUGGER
+        return image
 
     def add_color_pattern(self, draw):
         colors = flag_colors[self.color_theme].copy() # without copy(), this would modify what is in the dict
@@ -132,10 +135,10 @@ def main():
     }
     
     flag_symbols = {
-        "Star" : {"Star" : 0.4, "Shield" : 0.1, "Bear" : 0.3, "Flower" : 0.2},
+        "Star" : {"Star" : 0.2, "Shield" : 0.1, "Bear" : 0.3, "Flower" : 0.4},
         "Shield" : {"Star" : 0.2, "Shield" : 0.1, "Bear" : 0.5, "Flower" : 0.2},
-        "Bear" : {"Star" : 0.5, "Shield" : 0.2, "Bear" : 0.1, "Flower" : 0.2},
-        "Flower" : {"Star" : 0.2, "Shield" : 0.3, "Bear" : 0.1, "Flower" : 0.4}
+        "Bear" : {"Star" : 0.3, "Shield" : 0.4, "Bear" : 0.1, "Flower" : 0.2},
+        "Flower" : {"Star" : 0.4, "Shield" : 0.2, "Bear" : 0.3, "Flower" : 0.1}
     }
     
     # reading in the images
@@ -168,15 +171,33 @@ def main():
     # print(generated_sequences) # DEBUGGER
     flag_tuples = tuple(zip(*generated_sequences))
     
-    print(flag_tuples) # DEBUGGER
+    # print(flag_tuples) # DEBUGGER
+    flag_images = []
     
     for flag in flag_tuples:
         pattern, color_theme, num_repetitions, symbol = flag # unpack the tuple of flag properties
         new_flag = Flag(pattern, color_theme, num_repetitions, symbol) # create a flag object
-        new_flag.draw_flag()
+        new_flag_image = new_flag.draw_flag()
+        flag_images.append(new_flag_image)
     
-    ans = input("Which region of the world do you think each flag could belong to?\n")
-    # notes: add graph to display all flags? grows to know len of sequence? labeled by flag 1, etc.?
+    num_rows = SEQUENCE_LEN // 3 # determine number of rows needed to fit all flags
+    if (SEQUENCE_LEN % 3) != 0: # if there is remainder of flags, add an extra row
+        num_rows += 1
+    
+    # create a figure (size in inches)
+    graph = plt.figure(figsize=(6, 2*num_rows))
+    plt.rcParams["font.family"] = "serif" # change the font of the graphs 
+    
+    # add a subplot for each flag
+    for i in range(0, SEQUENCE_LEN):
+        graph.add_subplot(num_rows, NUM_COLS, i + 1) # add a subplot next to the prior one
+        plt.imshow(flag_images[i])
+        plt.title(f"Flag #{i+1}") # assign a number for each flag
+        plt.axis("off")
+    
+    graph.suptitle("Flags", fontsize=24, weight="bold", color="black") # add title
+    graph.tight_layout() # fit subplots into figure bounds
+    graph.show()
 
 if __name__ == "__main__":
     main()
