@@ -57,11 +57,8 @@ class MarkovChain:
             self.states, weights=[self.transition_matrix[current_state][next_state] for next_state in self.states]
             )
     
-    def generate_sequence(self, sequence_len):
+    def generate_sequence(self):
         """Generates a sequence of flag properties using a Markov chain.
-
-        Args:
-            sequence_len (int): desired length of sequence generation.
 
         Returns:
             list: a sequence of flag properties.
@@ -70,7 +67,7 @@ class MarkovChain:
         current_state = random.choice(self.states) # start at a random state
         generated_sequence = []
         
-        while len(generated_sequence) < sequence_len:
+        while len(generated_sequence) < SEQUENCE_LEN:
             next_state = (self.get_next_state(current_state))[0]  # unpack list of 1 item
             generated_sequence.append(next_state)
             current_state = next_state
@@ -244,7 +241,7 @@ def main():
     
     for property in properties:
         markov_chain = MarkovChain(property)
-        new_sequence = markov_chain.generate_sequence(SEQUENCE_LEN)
+        new_sequence = markov_chain.generate_sequence()
         generated_sequences.append(new_sequence)
     
     flag_tuples = tuple(zip(*generated_sequences)) # create a tuple holding properties of each flag

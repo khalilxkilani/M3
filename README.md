@@ -3,12 +3,17 @@ CSCI 3725: Computational Creativity\
 Khalil Kilani\
 September 17, 2024
 
-# Flags from an Imaginary World
+# Title: Flags from an Imaginary World
 
 ***
 
 ### 1.) How to Set up and Run the Code
-Text
+1.) Download a zip file of the project from GitHub.\
+2.) Unzip the file.\
+3.) Open the file named "flag-gen-markov.py" in Visual Studio Code.\
+4.) **Optional:** change the constant named "SEQUENCE_LEN" to produce a longer or shorter sequence of flags. The grid size and padding will automatically adjust.\
+5.) Run the file named "flag-gen-markov.py" in an interactive window. To do so, click the play button in the top-left corner of the Visual Studio Code menu bar. This will open a separate window to display the generated flags.\
+6.) Repeat!
 
 ### 2.) Description
 Text
