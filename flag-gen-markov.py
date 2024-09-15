@@ -12,8 +12,8 @@ import os
 from PIL import Image, ImageDraw
 
 SEQUENCE_LEN = 3
-WIDTH_PX = 400
-HEIGHT_PX = 250
+WIDTH_PX = 417
+HEIGHT_PX = 252
 
 flag_colors = {
     "Pan-Arab" : ["black", "red", "darkgreen"],
@@ -24,6 +24,8 @@ flag_colors = {
     "Belgrano" : ["mediumblue", "white", "powderblue"],
     "Red-White Family" : ["red", "white", "maroon"]
 }
+
+images = []
 
 class MarkovChain:
     def __init__(self, transition_matrix):
@@ -60,6 +62,7 @@ class Flag:
         draw = ImageDraw.Draw(image)
         
         self.add_color_pattern(draw)
+        self.add_symbol(image)
         image.show()
 
     def add_color_pattern(self, draw):
@@ -76,7 +79,6 @@ class Flag:
         for i in range(self.pattern_repeat):
             if self.pattern == "Horizontal Stripes":
                 fill = random.choice([color for color in colors if color != prev_color]) # grab a random color from the current theme, do not repeat colors consecutively
-                print(f"FILL: {fill}")
                 draw.rectangle(coords, fill=fill)
                 
                 new_coords = (0, coords[1]+(HEIGHT_PX/self.pattern_repeat), 417, coords[3]+(HEIGHT_PX/self.pattern_repeat)) # update coords by 84 px to move downward a third
@@ -84,7 +86,6 @@ class Flag:
                 prev_color = fill
             elif self.pattern == "Vertical Stripes":
                 fill = random.choice([color for color in colors if color != prev_color]) # grab a random color from the current theme, do not repeat colors consecutively
-                print(f"FILL: {fill}")
                 draw.rectangle(coords, fill=fill)
                 
                 new_coords = (coords[0]+(WIDTH_PX/self.pattern_repeat), 0, coords[2]+(WIDTH_PX/self.pattern_repeat), 252) # update coords by 139 px to move rightward a third
@@ -92,8 +93,22 @@ class Flag:
                 prev_color = fill
             else:
                 print(f"Error in add_pattern: case for {self.pattern}")
+    
+    def add_symbol(self, image):
+        if self.symbol in ["Bear", "Star", "Flower"]: # for symbols with multiple styles, select a random option
+            symbol = random.choice(images[self.symbol])
+        else:
+            symbol = images[self.symbol]
+        
+        symbol.thumbnail((WIDTH_PX/1.5, HEIGHT_PX/1.5)) # make image smaller while maintaining scale ratio
+        symbol_width, symbol_height = symbol.width, symbol.height
+        
+        # obtain the centered coords for the symbol
+        centered_coords = ((WIDTH_PX//2)-symbol_width//2, (HEIGHT_PX//2)-symbol_height//2)        
+        image.paste(symbol, box=centered_coords, mask=symbol) # paste the symbol onto the flag
 
 def main():
+    global images
     flag_patterns = {
         "Horizontal Stripes" : {"Horizontal Stripes" : 0.4, "Vertical Stripes" : 0.6},
         "Vertical Stripes" : {"Horizontal Stripes" : 0.6, "Vertical Stripes" : 0.4}
@@ -133,6 +148,13 @@ def main():
     orange_flower = Image.open(directory + "/graphics/orange-flower.png")
     bw_flower = Image.open(directory + "/graphics/bw-flower.png")
     shield = Image.open(directory + "/graphics/shield.png")
+    
+    images = {
+        "Bear" : [bear_image, polar_bear_image],
+        "Star" : [white_star, black_star],
+        "Flower" : [red_flowers, orange_flower, bw_flower],
+        "Shield" : shield
+        }
     
     properties = [flag_patterns, flag_color_themes, flag_num_repetitions, flag_symbols]
     generated_sequences = []
