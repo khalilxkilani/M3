@@ -14,7 +14,7 @@ from PIL import Image, ImageDraw, ImageOps
 SEQUENCE_LEN = 9
 WIDTH_PX = 417
 HEIGHT_PX = 252
-FIG_DIMENSION_MULTIPLIER = 2.5
+DIMENSION_MULTIPLIER = 2.5
 NUM_COLS = 3
 
 flag_colors = {
@@ -82,17 +82,21 @@ class Flag:
         
         for i in range(self.pattern_repeat):
             if self.pattern == "Horizontal Stripes":
-                fill = random.choice([color for color in colors if color != prev_color]) # grab a random color from the current theme, do not repeat colors consecutively
+                # grab a random color from the current theme, do not repeat colors consecutively
+                fill = random.choice([color for color in colors if color != prev_color])
                 draw.rectangle(coords, fill=fill)
                 
-                new_coords = (0, coords[1]+(HEIGHT_PX/self.pattern_repeat), 417, coords[3]+(HEIGHT_PX/self.pattern_repeat)) # update coords by 84 px to move downward a third
+                # update coords to move downward
+                new_coords = (0, coords[1]+(HEIGHT_PX/self.pattern_repeat), 417, coords[3]+(HEIGHT_PX/self.pattern_repeat))
                 coords = new_coords
                 prev_color = fill
             elif self.pattern == "Vertical Stripes":
-                fill = random.choice([color for color in colors if color != prev_color]) # grab a random color from the current theme, do not repeat colors consecutively
+                # grab a random color from the current theme, do not repeat colors consecutively
+                fill = random.choice([color for color in colors if color != prev_color])
                 draw.rectangle(coords, fill=fill)
                 
-                new_coords = (coords[0]+(WIDTH_PX/self.pattern_repeat), 0, coords[2]+(WIDTH_PX/self.pattern_repeat), 252) # update coords by 139 px to move rightward a third
+                # update coords to move rightward
+                new_coords = (coords[0]+(WIDTH_PX/self.pattern_repeat), 0, coords[2]+(WIDTH_PX/self.pattern_repeat), 252)
                 coords = new_coords
                 prev_color = fill
             else:
@@ -186,7 +190,7 @@ def main():
         num_rows += 1
     
     # create a figure and specify size in inches
-    grid = plt.figure(figsize=(FIG_DIMENSION_MULTIPLIER * NUM_COLS, FIG_DIMENSION_MULTIPLIER * num_rows)) # 2.5 x 2.5 inch square allocated to each flag
+    grid = plt.figure(figsize=(DIMENSION_MULTIPLIER * NUM_COLS, DIMENSION_MULTIPLIER * num_rows)) # 2.5 x 2.5 inch square allocated to each flag
     plt.rcParams["font.family"] = "serif" # change the font of the graphs 
     
     # add a subplot for each flag
