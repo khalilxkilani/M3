@@ -5,17 +5,17 @@ Assignment: M3: A Markov Distinction
 Date: September 17, 2024
 """
 
-import numpy as np
 import matplotlib.pyplot as plt
 import random
 import os
 from PIL import Image, ImageDraw, ImageOps
 
-SEQUENCE_LEN = 9
-WIDTH_PX = 417
-HEIGHT_PX = 252
-DIMENSION_MULTIPLIER = 2.5
-NUM_COLS = 3
+SEQUENCE_LEN = 9 # desired length of generated flag sequence
+# dimensions of each flag
+WIDTH_PX = 400
+HEIGHT_PX = 250
+DIMENSION_MULTIPLIER = 2.5 # determines size allocated to each flag in grid
+NUM_COLS = 3 # number of columns in the grid
 
 flag_colors = {
     "Pan-Arab" : ["black", "red", "darkgreen"],
@@ -27,7 +27,7 @@ flag_colors = {
     "Red-White Family" : ["red", "white", "maroon"]
 }
 
-images = []
+symbol_images = [] # global container to hold symbol images after reading them in
 
 class MarkovChain:
     def __init__(self, transition_matrix):
@@ -57,16 +57,14 @@ class Flag:
         self.pattern_repeat = int(pattern_repeat) # cast pattern repeat value from str to int
         self.symbol = symbol
 
-    def draw_flag(self):
-        print(f"Pattern: {self.pattern}, Color Theme: {self.color_theme}, Symbol: {self.symbol}") # DEBUGGER
-        
-        image = Image.new("RGB", size=(WIDTH_PX, HEIGHT_PX))
+    def draw_flag(self):        
+        image = Image.new("RGB", size=(WIDTH_PX, HEIGHT_PX)) # create a new canvas
         draw = ImageDraw.Draw(image)
         
         self.add_color_pattern(draw)
         self.add_symbol(image)
         image = ImageOps.expand(image, border=5, fill="black") # add a black border to the flag
-        # image.show() # DEBUGGER
+        # image.show() # NOTICE: uncomment if you want to view the flags as temporary files rather than grid
         return image
 
     def add_color_pattern(self, draw):
@@ -104,9 +102,9 @@ class Flag:
     
     def add_symbol(self, image):
         if self.symbol in ["Bear", "Star", "Flower"]: # for symbols with multiple styles, select a random option
-            symbol = random.choice(images[self.symbol])
+            symbol = random.choice(symbol_images[self.symbol])
         else:
-            symbol = images[self.symbol]
+            symbol = symbol_images[self.symbol]
         
         symbol.thumbnail((WIDTH_PX/1.5, HEIGHT_PX/1.5)) # make image smaller while maintaining scale ratio
         symbol_width, symbol_height = symbol.width, symbol.height
@@ -116,7 +114,7 @@ class Flag:
         image.paste(symbol, box=centered_coords, mask=symbol) # paste the symbol onto the flag
 
 def main():
-    global images
+    global symbol_images
     flag_patterns = {
         "Horizontal Stripes" : {"Horizontal Stripes" : 0.4, "Vertical Stripes" : 0.6},
         "Vertical Stripes" : {"Horizontal Stripes" : 0.6, "Vertical Stripes" : 0.4}
@@ -157,7 +155,7 @@ def main():
     bw_flower = Image.open(directory + "/graphics/bw-flower.png")
     shield = Image.open(directory + "/graphics/shield.png")
     
-    images = {
+    symbol_images = {
         "Bear" : [bear_image, polar_bear_image],
         "Star" : [white_star, black_star],
         "Flower" : [red_flowers, orange_flower, bw_flower],
@@ -170,13 +168,9 @@ def main():
     for property in properties:
         markov_chain = MarkovChain(property)
         new_sequence = markov_chain.generate_sequence(SEQUENCE_LEN)
-        # print(new_sequence) # DEBUGGER
         generated_sequences.append(new_sequence)
     
-    # print(generated_sequences) # DEBUGGER
-    flag_tuples = tuple(zip(*generated_sequences))
-    
-    # print(flag_tuples) # DEBUGGER
+    flag_tuples = tuple(zip(*generated_sequences)) # create a tuple holding properties of each flag
     flag_images = []
     
     for flag in flag_tuples:
@@ -185,7 +179,7 @@ def main():
         new_flag_image = new_flag.draw_flag()
         flag_images.append(new_flag_image)
     
-    num_rows = SEQUENCE_LEN // 3 # determine number of rows needed to fit all flags
+    num_rows = SEQUENCE_LEN // 3 # determine number of rows needed to fit all flags, round down
     if (SEQUENCE_LEN % 3) != 0: # if there is remainder of flags, add an extra row
         num_rows += 1
     
