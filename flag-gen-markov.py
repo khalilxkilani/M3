@@ -13,7 +13,7 @@ import random
 import os
 from PIL import Image, ImageDraw, ImageOps
 
-SEQUENCE_LEN = 9 # desired length of generated flag sequence
+SEQUENCE_LEN = 6 # desired length of generated flag sequence
 WIDTH_PX = 400 # flag dimensions in pixels
 HEIGHT_PX = 250 # flag dimensions in pixels
 DIMENSION_MULTIPLIER = 2.5 # determines inches allocated to each flag in grid
