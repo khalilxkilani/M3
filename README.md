@@ -3,7 +3,7 @@ CSCI 3725: Computational Creativity\
 Khalil Kilani\
 September 17, 2024
 
-# Title: Flags from an Imaginary World
+# Flags from an Imaginary World
 
 ***
 
@@ -36,8 +36,8 @@ This system produces flag designs using Markov chains. The visual artifacts cons
     * Belgrano (medium blue, white, powder blue)
     * Red-White Family (red, white, maroon)
 
-### 3.) Personal Meaning (1 p)
-
+### 3.) Personal Meaning
+This system is personally meaningful because I enjoy learning about flag designs, national capitals, and world geography. Additionally, I often play trivia games to memorize different flag designs. As I have a passion for international affairs and hope to pursue a career as a U.S. diplomat, I must be adept at recognizing different national symbols. For example, when I worked at the Department of State this past summer, foreign dignitaries and delegates would wear friendship pins with their nation's flag alongside the U.S. flag. Another example is how my colleagues often referred to nations by their capital rather than country name. What fascinates me most about national flag designs is the different "families" like the Pan-Arab or the Pan-African flags. These designs share color schemes and patterns rooted in symbolic history that depict a sense of cultural unity despite ongoing geopolitical conflicts.
 
 ### 4.) Challenges
 * I pushed myself outside of my comfort zone by pursuing a visual graphic topic not taught in class and being intentional about my organizational approach. To explain, I began by drawing my ideas on paper, then programming a framework using hard-coded values, and then generalizing the approach to work for all values. What was most difficult about generalizing the functions to work for all values was working with coordinates on the drawing canvas. For example, there is no method to easily center an image atop another or draw shapes consecutively, so I needed to calculate it all mathematically. Another example is how the images may not have the same file path on different local machines. These issues required me to extensively read the documentation for the libraries I imported, honing my skill as a computer scientist to translate manual instructions into working programs. Another way I pushed myself was by researching articles about flags to understand which flag properties my system should consider. To explain, I researched the flag color themes and most popular symbols so that my system produces flags that are unique yet grounded in realistic styles.
