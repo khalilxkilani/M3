@@ -16,20 +16,39 @@ September 17, 2024
 6.) Repeat!
 
 ### 2.) Description
-Text
+This system produces flag designs using Markov chains. The visual artifacts consider the four flag properties listed below, so the system has four transition matrices in total. The flags are assembled by drawing rectangles atop a blank canvas, filling the rectangles with the required colors, centering a symbol upon the top layer, and adding a border. The system displays the generated flags to the user in a grid format. All the dimensions within the system change dynamically, meaning that the size of the flags, patterns, and grid are programmed to adjust to the user-defined constants.
 
-### 3.) Personal Meaning
-Text
+- **Flag Patterns:**
+    * Horizontal stripes and vertical stripes
 
-### 4.) Challenges
-Text
+- **Flag Pattern Repetitions:**
+    * 2, 3, 4, and 9
+
+- **Flag Symbols:**
+    * Star (black and white), bear (grizzly and polar), flower (red, orange, and monochrome), and shield
+
+- **Flag Color Themes:**
+    * Pan-Arab (black, red, dark green)
+    * Pan-African (dark green, gold, red)
+    * Pan-Slavic (white, blue, red)
+    * Pan-Iranian (white, red, yellow green)
+    * Miranda (gold, medium blue, red)
+    * Belgrano (medium blue, white, powder blue)
+    * Red-White Family (red, white, maroon)
+
+### 3.) Personal Meaning (1 p)
+
+
+### 4.) Challenges (1 p)
+
 
 ### 5.) Creativity
-Text
+I believe that my system is creative because it is both novel and valuable. This system is novel because it generates unique flag designs that no nation currently uses. This system is valuable because its visual artifacts are realistic and rooted in historical themes. Overall, the system mainly qualifies as "P Creative" because it is psychologically creative for the individual user. However, I envision that this system could become "H-Creative" and benefit society if it solves modern problems relating to symbols of national identity. For example, my home state of Maine recently held a contest to redesign the state flag. There were over 400 submissions, and the winning design will either be adopted or rejected in a November 2024 ballot. If my system accounted for Maine's cultural and historical identity, it could produce flag designs meaningful to Mainers.
 
 ### 6.) Sources
-* "The World's Flags, in 7 Charts" on [Washington Post](https://www.washingtonpost.com/news/wonk/wp/2016/04/07/the-worlds-flags-in-7-charts/)
-* "Flying Colors" on [New York Times](https://www.nytimes.com/2023/08/20/briefing/state-flags.html)
+* "The World's Flags, in 7 Charts" on [The Washington Post](https://www.washingtonpost.com/news/wonk/wp/2016/04/07/the-worlds-flags-in-7-charts/)
+* "Flying Colors" on [The New York Times](https://www.nytimes.com/2023/08/20/briefing/state-flags.html)
+* "Here is a look at the new state flag design Mainers will vote on this November" on [Maine Morning Star](https://mainemorningstar.com/briefs/here-is-a-look-at-the-new-state-flag-design-mainers-will-vote-on-this-november/)
 * "Drawing Shapes on Images with Python and Pillow" on [Mouse Vs Python](https://www.blog.pythonlibrary.org/2021/02/23/drawing-shapes-on-images-with-python-and-pillow/)
 * "Pillow 10.4.0 Documentation" on [Pillow](https://pillow.readthedocs.io/en/stable/index.html)
 * "Matplotlib 3.9.2 Documentation" on [Matplotlib](https://matplotlib.org/stable/index.html)

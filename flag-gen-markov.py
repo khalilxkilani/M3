@@ -220,14 +220,14 @@ def main():
     
     # reading in the images
     directory = os.path.dirname(os.path.realpath(__file__)) # get path to current directory to ensure images can be found when not working locally
-    bear_image = Image.open(directory + "/graphics/bear.png") # prepend path to current directory to path of image
-    polar_bear_image = Image.open(directory + "/graphics/polar-bear.png")
-    white_star = Image.open(directory + "/graphics/white-star.png")
-    black_star = Image.open(directory + "/graphics/black-star.png")
-    red_flowers = Image.open(directory + "/graphics/red-flowers.png")
-    orange_flower = Image.open(directory + "/graphics/orange-flower.png")
-    bw_flower = Image.open(directory + "/graphics/bw-flower.png")
-    shield = Image.open(directory + "/graphics/shield.png")
+    bear_image = Image.open(directory + "/assets/bear.png") # prepend path to current directory to path of image
+    polar_bear_image = Image.open(directory + "/assets/polar-bear.png")
+    white_star = Image.open(directory + "/assets/white-star.png")
+    black_star = Image.open(directory + "/assets/black-star.png")
+    red_flowers = Image.open(directory + "/assets/red-flowers.png")
+    orange_flower = Image.open(directory + "/assets/orange-flower.png")
+    bw_flower = Image.open(directory + "/assets/bw-flower.png")
+    shield = Image.open(directory + "/assets/shield.png")
     
     symbol_images = {
         "Bear" : [bear_image, polar_bear_image],
