@@ -103,7 +103,6 @@ class Flag:
         self.add_color_pattern(draw)
         self.add_symbol(image)
         image = ImageOps.expand(image, border=5, fill="black") # add a black border to the flag
-        # image.show() # NOTICE: uncomment if you want to view the flags as temporary files rather than grid
         return image
 
     def add_color_pattern(self, draw):
